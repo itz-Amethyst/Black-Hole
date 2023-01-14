@@ -2,7 +2,7 @@ import { defineConfig } from 'vite';
 import glsl from 'vite-plugin-glsl';
 
 export default defineConfig({
-  root: 'src',
+  root: 'src/Galaxy1/',
   build: {
     // Relative to the root
     outDir: '../dist',

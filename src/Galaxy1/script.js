@@ -23,7 +23,7 @@ const scene = new THREE.Scene()
 const parameters = {}
 parameters.count = 200000
 parameters.size = 0.005
-parameters.radius = 5
+parameters.radius = 4
 parameters.branches = 3
 parameters.spin = 1
 parameters.randomness = 0.5
@@ -53,6 +53,9 @@ const generateGalaxy = () =>
     const colors = new Float32Array(parameters.count * 3)
     const scales = new Float32Array(parameters.count * 1)
 
+    //? another way
+    const randomness = new Float32Array(parameters.count * 3)
+
     const insideColor = new THREE.Color(parameters.insideColor)
     const outsideColor = new THREE.Color(parameters.outsideColor)
 
@@ -65,13 +68,19 @@ const generateGalaxy = () =>
 
         const branchAngle = (i % parameters.branches) / parameters.branches * Math.PI * 2
 
+        // Randomness
         const randomX = Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : - 1) * parameters.randomness * radius
         const randomY = Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : - 1) * parameters.randomness * radius
         const randomZ = Math.pow(Math.random(), parameters.randomnessPower) * (Math.random() < 0.5 ? 1 : - 1) * parameters.randomness * radius
 
-        positions[i3    ] = Math.cos(branchAngle) * radius + randomX
-        positions[i3 + 1] = randomY
-        positions[i3 + 2] = Math.sin(branchAngle) * radius + randomZ
+        positions[i3    ] = Math.cos(branchAngle) * radius + randomX //? another way comment + randomX
+        positions[i3 + 1] = randomY //? another way replace with 0.0
+        positions[i3 + 2] = Math.sin(branchAngle) * radius + randomZ //? another way comment + randomZ
+
+        // ? another way
+        // randomness[i3 + 0] = randomX
+        // randomness[i3 + 1] = randomY
+        // randomness[i3 + 2] = randomZ
 
         // Color
         const mixedColor = insideColor.clone()
@@ -88,6 +97,8 @@ const generateGalaxy = () =>
     geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
     geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3))
     geometry.setAttribute('ascale', new THREE.BufferAttribute(colors, 1))
+    //? another way
+    geometry.setAttribute('aRandomness', new THREE.BufferAttribute(randomness, 3))
 
     /**
      * Material
@@ -97,7 +108,8 @@ const generateGalaxy = () =>
         fragmentShader: fragmentShader,
 
         uniforms: {
-            uSize: {value: 30 * renderer.getPixelRatio() }
+            uSize: {value: 10 * renderer.getPixelRatio() },
+            uTime: {value : 0}
         },
 
         depthWrite: false,
@@ -148,9 +160,11 @@ window.addEventListener('resize', () =>
  */
 // Base camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
-camera.position.x = 3
-camera.position.y = 3
-camera.position.z = 3
+camera.position.x = 1
+camera.position.y = 1
+camera.position.z = 0.4
+
+// camera.top = -10
 scene.add(camera)
 
 // Controls
@@ -177,6 +191,9 @@ const clock = new THREE.Clock()
 const tick = () =>
 {
     const elapsedTime = clock.getElapsedTime()
+
+    // Update Material
+    material.uniforms.uTime.value = elapsedTime
 
     // Update controls
     controls.update()
