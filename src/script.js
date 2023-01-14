@@ -87,7 +87,7 @@ const generateGalaxy = () =>
 
     geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
     geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3))
-    geometry.setAttribute('ascale', new THREE.BufferAttribute(colors, 3))
+    geometry.setAttribute('ascale', new THREE.BufferAttribute(colors, 1))
 
     /**
      * Material
@@ -97,7 +97,7 @@ const generateGalaxy = () =>
         fragmentShader: fragmentShader,
 
         uniforms: {
-            uSize: {value: 8 * renderer.getPixelRatio() }
+            uSize: {value: 30 * renderer.getPixelRatio() }
         },
 
         depthWrite: false,
