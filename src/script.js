@@ -2,6 +2,8 @@ import './style.css'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as dat from 'lil-gui'
+import vertexShader from './shaders/vertex.glsl'
+import fragmentShader from './shaders/fragment.glsl'
 
 /**
  * Base
@@ -85,9 +87,9 @@ const generateGalaxy = () =>
     /**
      * Material
      */
-    material = new THREE.PointsMaterial({
-        size: parameters.size,
-        sizeAttenuation: true,
+    material = new THREE.ShaderMaterial({
+        vertexShader: vertexShader,
+        fragmentShader: fragmentShader,
         depthWrite: false,
         blending: THREE.AdditiveBlending,
         vertexColors: true
