@@ -1,4 +1,4 @@
-import './style.css'
+import '/css/style.css'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as dat from 'lil-gui'
@@ -23,13 +23,13 @@ const scene = new THREE.Scene()
 const parameters = {}
 parameters.count = 200000
 parameters.size = 0.005
-parameters.radius = 2
-parameters.branches = 3
+parameters.radius = 1.5
+parameters.branches = 4
 parameters.spin = 1
-parameters.randomness = 0.5
-parameters.randomnessPower = 3
-parameters.insideColor = '#ff6030'
-parameters.outsideColor = '#1b3984'
+parameters.randomness = 0.424
+parameters.randomnessPower = 5.229
+parameters.insideColor = '#1546c1'
+parameters.outsideColor = '#804794'
 
 let geometry = null
 let material = null
