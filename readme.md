@@ -2,7 +2,7 @@
 
 ## Demo 1
 
-![Black Hole]('./src/assets/demo1.png')
+![Black Hole](./src/assets/demo1.png)
 
 ## Demo 2
 
